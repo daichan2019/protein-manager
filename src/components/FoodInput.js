@@ -10,6 +10,8 @@ export const FoodInput = (props) => {
     getOptionLabel: (option) => option.name,
   };
 
+  console.log(props.amount);
+
   return (
     <>
       <Autocomplete
@@ -24,7 +26,12 @@ export const FoodInput = (props) => {
           />
         )}
       />
-      <Button variant="contained" color="primary" onClick={props.addFood}>
+      <Button
+        variant="contained"
+        color="primary"
+        onClick={props.addFood}
+        disabled={props.amount === null}
+      >
         追加
       </Button>
     </>

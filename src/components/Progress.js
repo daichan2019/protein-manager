@@ -1,10 +1,12 @@
 import React from "react";
-import LinearProgress from "@material-ui/core/LinearProgress";
 
 export const Progress = (props) => {
   return (
     <>
-      <LinearProgress variant="determinate" value={props.progress} />
+      <label htmlFor="progressbar">プロテインの摂取進捗状況</label>
+      <progress id="progressbar" max={props.amount} value={props.totalProtein}>
+        10%
+      </progress>
       <p>
         {props.totalProtein}/{props.amount}
       </p>

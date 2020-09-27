@@ -47,7 +47,12 @@ export const UserConfig = (props) => {
           <MenuItem value={`50〜69`}>50〜69</MenuItem>
         </Select>
       </FormControl>
-      <Button variant="contained" color="primary" onClick={props.defineAmount}>
+      <Button
+        variant="contained"
+        color="primary"
+        onClick={props.defineAmount}
+        disabled={props.userConfig.sex === "" || props.userConfig.age === ""}
+      >
         設定
       </Button>
       <p>

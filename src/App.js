@@ -18,18 +18,23 @@ export const App = () => {
 
   const totalProtein = proteinValue.reduce((acc, current) => acc + current);
 
-  // Methods
-  const handleInputValue = (event, newValue) => {
-    setValue(newValue);
-  };
+  console.log(amount);
 
-  const handleUserConfigChange = (e) => {
-    const name = e.target.name;
-    setUserConfig({
-      ...userConfig,
-      [name]: e.target.value,
-    });
-  };
+  // Methods
+  const handleInputValue = useCallback((event, newValue) => {
+    setValue(newValue);
+  }, []);
+
+  const handleUserConfigChange = useCallback(
+    (e) => {
+      const name = e.target.name;
+      setUserConfig({
+        ...userConfig,
+        [name]: e.target.value,
+      });
+    },
+    [userConfig]
+  );
 
   const defineAmount = () => {
     const userConfigJSON = JSON.stringify(userConfig);
@@ -64,7 +69,6 @@ export const App = () => {
   };
 
   useEffect(() => {
-    console.log(amount);
     const normalizeValue = (value) => (value / amount) * 100;
     setProgress(normalizeValue(totalProtein));
   }, [amount, totalProtein]);
@@ -81,6 +85,7 @@ export const App = () => {
         addFood={addFood}
         handleInputValue={handleInputValue}
         value={value}
+        amount={amount}
       />
       <Foods foods={foods} />
       <Progress
