@@ -1,8 +1,12 @@
 import React, { useCallback, useEffect, useState } from "react";
+import { Header } from "./components/Header";
 import { UserConfig } from "./components/UserConfig";
 import { FoodInput } from "./components/FoodInput";
 import { Foods } from "./components/Foods";
 import { Progress } from "./components/Progress";
+import { AllDeleteButton } from "./components/AllDeleteButton";
+
+import styled from "styled-components";
 
 export const App = () => {
   // State Settings
@@ -11,14 +15,13 @@ export const App = () => {
     age: "",
   });
   const [value, setValue] = useState(null);
-  const [amount, setAmount] = useState(null);
+  const [amount, setAmount] = useState(0);
   const [foods, setFoods] = useState([]);
   const [proteinValue, setProteinValue] = useState([0]);
+  const [totalProtein, setTotalProtein] = useState(0);
   const [progress, setProgress] = useState(0);
 
-  const totalProtein = proteinValue.reduce((acc, current) => acc + current);
-
-  console.log(amount);
+  // const totalProtein = proteinValue.reduce((acc, current) => acc + current);
 
   // Methods
   const handleInputValue = useCallback((event, newValue) => {
@@ -68,31 +71,58 @@ export const App = () => {
     }
   };
 
+  const deleteFood = (food) => {
+    setFoods(foods.filter((selected) => selected !== food));
+    setProteinValue(
+      proteinValue.filter((selected) => selected !== food.protein)
+    );
+  };
+
+  // const allDelete = () => {
+  //   setFoods([]);
+  //   setProteinValue(0);
+  // };
+
   useEffect(() => {
+    setTotalProtein(proteinValue.reduce((acc, current) => acc + current));
     const normalizeValue = (value) => (value / amount) * 100;
     setProgress(normalizeValue(totalProtein));
-  }, [amount, totalProtein]);
+  }, [amount, proteinValue, totalProtein]);
 
   return (
-    <div>
-      <UserConfig
-        userConfig={userConfig}
-        amount={amount}
-        defineAmount={defineAmount}
-        handleUserConfigChange={handleUserConfigChange}
-      />
-      <FoodInput
-        addFood={addFood}
-        handleInputValue={handleInputValue}
-        value={value}
-        amount={amount}
-      />
-      <Foods foods={foods} />
-      <Progress
-        totalProtein={totalProtein}
-        progress={progress}
-        amount={amount}
-      />
-    </div>
+    <Wrapper>
+      <Header />
+      <StyledMain>
+        <UserConfig
+          userConfig={userConfig}
+          amount={amount}
+          defineAmount={defineAmount}
+          handleUserConfigChange={handleUserConfigChange}
+        />
+        <FoodInput
+          addFood={addFood}
+          handleInputValue={handleInputValue}
+          value={value}
+          amount={amount}
+        />
+        <Foods foods={foods} deleteFood={deleteFood} />
+        <Progress
+          totalProtein={totalProtein}
+          progress={progress}
+          amount={amount}
+        />
+        {/* <AllDeleteButton allDelete={allDelete} /> */}
+      </StyledMain>
+    </Wrapper>
   );
 };
+
+const Wrapper = styled.div`
+  max-width: 768px;
+  margin: 0 auto;
+  width: 100%;
+`;
+
+const StyledMain = styled.main`
+  margin: 30px 20px;
+`;

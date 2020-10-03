@@ -4,17 +4,17 @@ import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import Button from "@material-ui/core/Button";
 
+import styled from "styled-components";
+
 export const FoodInput = (props) => {
   const defaultProps = {
     options: dataset,
     getOptionLabel: (option) => option.name,
   };
 
-  console.log(props.amount);
-
   return (
-    <>
-      <Autocomplete
+    <InputWrap>
+      <StyledAutocomplete
         {...defaultProps}
         value={props.value}
         onChange={props.handleInputValue}
@@ -26,14 +26,32 @@ export const FoodInput = (props) => {
           />
         )}
       />
-      <Button
+      <StyledButton
         variant="contained"
         color="primary"
         onClick={props.addFood}
-        disabled={props.amount === null}
+        disabled={props.amount === 0}
       >
         追加
-      </Button>
-    </>
+      </StyledButton>
+    </InputWrap>
   );
 };
+
+const InputWrap = styled.div`
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+`;
+
+const StyledAutocomplete = styled(Autocomplete)`
+  width: 70%;
+  margin: 0;
+`;
+
+const StyledButton = styled(Button)`
+  width: 222px;
+  margin-left: 20px;
+  height: 56px;
+`;
