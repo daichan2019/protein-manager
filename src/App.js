@@ -9,7 +9,7 @@ import { AllDeleteButton } from "./components/AllDeleteButton";
 import styled from "styled-components";
 
 export const App = () => {
-  // State Settings
+  // States
   const [userConfig, setUserConfig] = useState({
     sex: "",
     age: "",
@@ -20,8 +20,6 @@ export const App = () => {
   const [proteinValue, setProteinValue] = useState([0]);
   const [totalProtein, setTotalProtein] = useState(0);
   const [progress, setProgress] = useState(0);
-
-  // const totalProtein = proteinValue.reduce((acc, current) => acc + current);
 
   // Methods
   const handleInputValue = useCallback((event, newValue) => {
@@ -78,10 +76,10 @@ export const App = () => {
     );
   };
 
-  // const allDelete = () => {
-  //   setFoods([]);
-  //   setProteinValue(0);
-  // };
+  const allDelete = () => {
+    setFoods([]);
+    setProteinValue([0]);
+  };
 
   useEffect(() => {
     setTotalProtein(proteinValue.reduce((acc, current) => acc + current));
@@ -111,7 +109,7 @@ export const App = () => {
           progress={progress}
           amount={amount}
         />
-        {/* <AllDeleteButton allDelete={allDelete} /> */}
+        <AllDeleteButton allDelete={allDelete} proteinValue={proteinValue} />
       </StyledMain>
     </Wrapper>
   );

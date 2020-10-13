@@ -8,15 +8,11 @@ export const Progress = (props) => {
         <label htmlFor="progressbar">プロテインの摂取進捗状況</label>
       </Title>
       <Grid>
-        <ProgressWrap>
-          <StyledProgress
-            id="progressbar"
-            max={props.amount}
-            value={props.totalProtein}
-          >
-            10%
-          </StyledProgress>
-        </ProgressWrap>
+        <progress
+          id="progressbar"
+          max={props.amount}
+          value={props.totalProtein}
+        ></progress>
         <p>
           {props.totalProtein}/{props.amount}
         </p>
@@ -37,25 +33,24 @@ const Grid = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-`;
 
-const ProgressWrap = styled.div`
-  height: 30px;
-  width: 90%;
-  border-radius: 2000px;
-  border: 3px solid #2a2a2a;
-  background-color: #ff8e3c;
-  position: relative;
-  box-sizing: border-box;
-  margin: 0;
-`;
+  progress[value] {
+    width: 90%;
+    -webkit-appearance: none;
+    appearance: none;
 
-const StyledProgress = styled.progress`
-  width: 100%;
-  display: block;
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 30px;
-  margin: 0;
+    ::-webkit-progress-bar {
+      height: 20px;
+      border-radius: 2000px;
+      background-color: #eff0f3;
+      box-sizing: border-box;
+    }
+
+    ::-webkit-progress-value {
+      height: 20px;
+      border-radius: 2000px;
+      background-color: #ff8e3c;
+      box-sizing: border-box;
+    }
+  }
 `;
